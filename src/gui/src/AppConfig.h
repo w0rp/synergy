@@ -80,9 +80,6 @@ class AppConfig: public QObject
 		void setAutoConfigPrompted(bool prompted);
 		void setEdition(Edition);
 		Edition edition() const;
-		QString setSerialKey(QString serial);
-		void clearSerialKey();
-		QString serialKey();
 		int lastExpiringWarningTime() const;
 		void setLastExpiringWarningTime(int t);
 

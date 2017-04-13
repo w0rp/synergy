@@ -57,9 +57,6 @@ ArgParser::parseServerArgs(ServerArgs& args, int argc, const char* const* argv)
 			// save configuration file path
 			args.m_configFile = argv[++i];
 		}
-		else if (isArg(i, argc, argv, "", "--serial-key", 1)) {
-			args.m_serial = SerialKey(argv[++i]);
-		}
 		else {
 			LOG((CLOG_PRINT "%s: unrecognized option `%s'" BYE, args.m_pname, argv[i], args.m_pname));
 			return false;
@@ -189,14 +186,6 @@ ArgParser::parseToolArgs(ToolArgs& args, int argc, const char* const* argv)
 		}
 		else if (isArg(i, argc, argv, NULL, "--get-arch", 0)) {
 			args.m_getArch = true;
-			return true;
-		}
-		else if (isArg(i, argc, argv, NULL, "--notify-activation", 0)) {
-			args.m_notifyActivation = true;
-			return true;
-		}
-		else if (isArg(i, argc, argv, NULL, "--notify-update", 0)) {
-			args.m_notifyUpdate = true;
 			return true;
 		}
 		else {
