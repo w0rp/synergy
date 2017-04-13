@@ -18,6 +18,7 @@
 # TODO: split this file up, it's too long!
 
 import sys, os, ConfigParser, shutil, re, ftputil, zipfile, glob, commands
+import platform
 from generators import VisualStudioGenerator, EclipseGenerator, XcodeGenerator, MakefilesGenerator
 from getopt import gnu_getopt
 
@@ -231,7 +232,11 @@ class InternalCommands:
 	prevdir = ''
 
 	# by default, no index specified as arg
-	generator_id = None
+	generator_id = (
+		2  # XCode
+		if sys.platform == 'darwin' else
+		1  # 32-bit Windows 1, or Makefiles on Linux
+	)
 
 	# by default, prompt user for input
 	no_prompts = False
@@ -242,14 +247,14 @@ class InternalCommands:
 	# by default, compile the gui
 	enableMakeGui = True
 
-	# by default, unknown
-	macSdk = None
+	# by default, the current mac version
+	macSdk = platform.mac_ver()[0] or None
 
 	# by default, unknown
 	macDeploy = None
 
 	# by default, unknown
-	macIdentity = None
+	macIdentity = 'test'
 
 	# gtest dir with version number
 	gtestDir = 'gtest-1.6.0'
