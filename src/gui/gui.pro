@@ -7,8 +7,7 @@ DEFINES += VERSION_REVISION=\\\"$$QMAKE_VERSION_REVISION\\\"
 DEPENDPATH += . \
     res
 INCLUDEPATH += . \
-    src \
-    ../lib/shared/
+    src
 FORMS += res/MainWindowBase.ui \
     res/AboutDialogBase.ui \
     res/ServerConfigDialogBase.ui \
@@ -102,8 +101,7 @@ HEADERS += src/MainWindow.h \
     src/SslCertificate.h \
     src/WebClient.h \
     src/ElevateMode.h \
-    src/FailedLoginDialog.h \
-    ../lib/shared/EditionType.h
+    src/FailedLoginDialog.h
 RESOURCES += res/Synergy.qrc
 RC_FILE = res/win/Synergy.rc
 macx {

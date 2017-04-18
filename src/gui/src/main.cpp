@@ -83,7 +83,6 @@ int main(int argc, char* argv[])
 
 	QSettings settings;
 	AppConfig appConfig (&settings);
-	qRegisterMetaType<Edition>("Edition");
 
 	app.switchTranslator(appConfig.language());
 

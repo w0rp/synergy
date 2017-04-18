@@ -29,7 +29,6 @@
 #include "ZeroconfService.h"
 #include "DataDownloader.h"
 #include "CommandProcess.h"
-#include "EditionType.h"
 #include "QUtility.h"
 #include "ProcessorArch.h"
 #include "SslCertificate.h"
@@ -505,7 +504,14 @@ void MainWindow::restartSynergy()
 
 void MainWindow::proofreadInfo()
 {
-	setEdition(m_AppConfig->edition()); // Why is this here?
+	setWindowTitle(mainWindowTitle);
+
+	if (m_AppConfig->getCryptoEnabled()) {
+		m_pSslCertificate = new SslCertificate(this);
+		m_pSslCertificate->generateCertificate();
+	}
+	updateLocalFingerprint();
+	saveSettings();
 
 	int oldState = m_SynergyState;
 	m_SynergyState = synergyDisconnected;
@@ -1007,18 +1013,6 @@ void MainWindow::serverDetected(const QString name)
 	if (m_pComboServerList->count() > 1) {
 		m_pComboServerList->show();
 	}
-}
-
-void MainWindow::setEdition(Edition edition)
-{
-	setWindowTitle(mainWindowTitle);
-
-	if (m_AppConfig->getCryptoEnabled()) {
-		m_pSslCertificate = new SslCertificate(this);
-		m_pSslCertificate->generateCertificate();
-	}
-	updateLocalFingerprint();
-	saveSettings();
 }
 
 void MainWindow::updateLocalFingerprint()

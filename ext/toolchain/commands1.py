@@ -248,7 +248,8 @@ class InternalCommands:
 	enableMakeGui = True
 
 	# by default, the current mac version
-	macSdk = platform.mac_ver()[0] or None
+	# Extract strings like '10.12' from '10.12.4', etc.
+	macSdk = '.'.join(platform.mac_ver()[0].split('.')[:2]) or None
 
 	# by default, unknown
 	macDeploy = None
@@ -786,7 +787,7 @@ class InternalCommands:
 			else:
 				# Find the framework directory on the system.
 				frameworkRootDir = (
-					glob.glob('/usr/local/Cellar/qt/*/Frameworks')
+					glob.glob('/usr/local/Cellar/qt/*/lib')
 					+ glob.glob("/Developer/Qt*/*/clang_64/lib")
 				)[0]
 
@@ -796,9 +797,30 @@ class InternalCommands:
 			for root, dirs, files in os.walk(target):
 				for dir in dirs:
 					if dir.startswith("Qt"):
+						# On old versions, we have paths like this:
+						# .../QtCore.framework/Contents/Info.plist
+						# On new versions, we have paths like this:
+						# .../QtCore.framework/Versions/5/Resources/Info.plist
+
+						# Try the new path first.
+						sourcePlistPath = os.path.join(
+							frameworkRootDir,
+							dir,
+							'Versions/5/Resources/Info.plist',
+						)
+
+						# Use the old path when the new path fails.
+						if not os.path.exists(sourcePlistPath):
+							sourcePlistPath = os.path.join(
+								frameworkRootDir,
+								dir,
+								'Contents/Info.plist',
+							)
+
 						shutil.copy(
-							frameworkRootDir + "/" + dir + "/Contents/Info.plist",
-							target + "/" + dir + "/Resources/")
+							sourcePlistPath,
+							os.path.join(target, dir, 'Resources/'),
+						)
 
 	def symlink(self, source, target):
 		if not os.path.exists(target):
@@ -832,7 +854,6 @@ class InternalCommands:
 						if dir.startswith("Qt"):
 							self.try_chdir(target + "/" + dir +"/Versions")
 							self.symlink("5", "Current")
-							self.move("../Resources", "5")
 							self.restore_chdir()
 
 							self.try_chdir(target + "/" + dir)

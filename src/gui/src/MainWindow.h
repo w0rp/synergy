@@ -116,7 +116,6 @@ class MainWindow : public QMainWindow, public Ui::MainWindowBase
 		void updateLocalFingerprint();
 
 public slots:
-		void setEdition(Edition edition);
 		void appendLogRaw(const QString& text);
 		void appendLogInfo(const QString& text);
 		void appendLogDebug(const QString& text);

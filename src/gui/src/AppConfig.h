@@ -23,7 +23,6 @@
 #include <QObject>
 #include <QString>
 #include "ElevateMode.h"
-#include <EditionType.h>
 
 // this should be incremented each time a new page is added. this is
 // saved to settings when the user finishes running the wizard. if
@@ -78,8 +77,6 @@ class AppConfig: public QObject
 		void setAutoConfig(bool autoConfig);
 		bool autoConfigPrompted();
 		void setAutoConfigPrompted(bool prompted);
-		void setEdition(Edition);
-		Edition edition() const;
 		int lastExpiringWarningTime() const;
 		void setLastExpiringWarningTime(int t);
 
@@ -135,7 +132,6 @@ protected:
 		bool m_AutoConfig;
 		ElevateMode m_ElevateMode;
 		bool m_AutoConfigPrompted;
-		Edition m_Edition;
 		QString m_ActivateEmail;
 		bool m_CryptoEnabled;
 		bool m_AutoHide;

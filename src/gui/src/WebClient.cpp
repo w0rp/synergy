@@ -17,7 +17,6 @@
 
 #include "WebClient.h"
 
-#include "EditionType.h"
 #include "QUtility.h"
 
 #include <QProcess>
@@ -25,11 +24,11 @@
 #include <QCoreApplication>
 #include <stdexcept>
 
-bool 
+bool
 WebClient::getEdition (int& edition, QString& errorOut) {
 	QString responseJson = request();
-	
-	/* TODO: This is horrible and should be ripped out as soon as we move 
+
+	/* TODO: This is horrible and should be ripped out as soon as we move
 	 *		 to Qt 5. See issue #5630
 	 */
 
