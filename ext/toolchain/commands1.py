@@ -783,7 +783,11 @@ class InternalCommands:
 
 			(qMajor, qMinor, qRev) = self.getQmakeVersion()
 			if qMajor <= 4:
-				frameworkRootDir = "/Library/Frameworks"
+				frameworkRootDir = (
+					glob.glob('/usr/local/Cellar/qt4/*/Frameworks')
+					+ glob.glob('/usr/local/Cellar/qt@4/*/Frameworks')
+					+ ["/Library/Frameworks"]
+				)[0]
 			else:
 				# Find the framework directory on the system.
 				frameworkRootDir = (

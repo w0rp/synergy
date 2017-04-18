@@ -33,11 +33,21 @@ Open a Terminal and run this to install XCode commandline tools:
 xcode-select --install
 ```
 
-Then install cmake and Qt via Homebrew
+Then install cmake.
 
 ```bash
 brew install cmake
-brew install qt
+```
+
+Install Qt4 from this guy's repo: https://github.com/cartr/homebrew-qt4
+
+If you have installed Qt5, then you might want to remove that, it might cause
+issues. (It may or may not work.)
+
+```
+brew tap cartr/qt4
+brew tap-pin cartr/qt4
+brew install qt@4
 ```
 
 Then run the following to build an application:
