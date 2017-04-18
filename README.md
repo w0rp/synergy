@@ -20,6 +20,8 @@ Then run the following:
 ```bash
 ./hm.sh conf
 ./hm.sh build
+# This command will build a .deb package.
+./hm.sh package deb
 ```
 
 ## Building on Mac OSX
